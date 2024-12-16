@@ -1,0 +1,119 @@
+@baseUrl = http://localhost:5000/api
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjAzMTkzYjdkMjk3NmE2MDE5ZTcwYSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDM1NzcyNiwiZXhwIjoxNzM0MzU4NjI2fQ.tVztVNKgPRYahKQPHYHcYV700rVIC2bIabD7EMoDEPQ
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjAzMTkzYjdkMjk3NmE2MDE5ZTcwYSIsImlhdCI6MTczNDM1NzQwNCwiZXhwIjoxNzM0OTYyMjA0fQ.TfA6PvCqDIGIGnqvAU9QeFGm6h7dbuRe6u6hmVfGEUE
+
+### User Registration
+POST {{baseUrl}}/users/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### User Login
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### Refresh Token
+POST {{baseUrl}}/users/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+### Get All Villas
+GET {{baseUrl}}/villas
+
+### Search Villas
+GET {{baseUrl}}/villas/search?location=Bali&capacity=4&startDate=2023-07-01&endDate=2023-07-07
+
+### Get Villa by ID
+GET {{baseUrl}}/villas/VILLA_ID_HERE
+
+### Create Villa (Admin only)
+POST {{baseUrl}}/villas
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "Luxury Beach Villa",
+  "description": "Beautiful villa with ocean view",
+  "price": 200,
+  "capacity": 4,
+  "location": "Bali",
+  "amenities": ["Pool", "WiFi", "Air Conditioning"],
+  "images": ["https://example.com/image1.jpg", "https://example.com/image2.jpg"]
+}
+
+### Update Villa (Admin only)
+PUT {{baseUrl}}/villas/676032feb7d2976a6019e70f
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "price": 220,
+  "amenities": ["Pool", "WiFi", "Air Conditioning", "Beach Access"]
+}
+
+### Delete Villa (Admin only)
+DELETE {{baseUrl}}/villas/VILLA_ID_HERE
+Authorization: Bearer {{authToken}}
+
+### Create Booking
+POST {{baseUrl}}/bookings
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "villaId": "676032feb7d2976a6019e70f",
+  "startDate": "2023-07-01",
+  "endDate": "2023-07-07"
+}
+
+### Get User Bookings
+GET {{baseUrl}}/bookings/user
+Authorization: Bearer {{authToken}}
+
+### Get Booking by ID
+GET {{baseUrl}}/bookings/67603342b7d2976a6019e714
+Authorization: Bearer {{authToken}}
+
+### Cancel Booking
+PUT {{baseUrl}}/bookings/67603342b7d2976a6019e714/cancel
+Authorization: Bearer {{authToken}}
+
+### Create Review
+POST {{baseUrl}}/reviews
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "villaId": "VILLA_ID_HERE",
+  "rating": 5,
+  "comment": "Excellent stay, highly recommended!"
+}
+
+### Get Villa Reviews
+GET {{baseUrl}}/reviews/villa/VILLA_ID_HERE
+
+### Update Review
+PUT {{baseUrl}}/reviews/REVIEW_ID_HERE
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "rating": 4,
+  "comment": "Great stay, but could improve on some aspects."
+}
+
+### Delete Review
+DELETE {{baseUrl}}/reviews/REVIEW_ID_HERE
+Authorization: Bearer {{authToken}}
